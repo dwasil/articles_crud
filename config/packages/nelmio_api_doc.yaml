@@ -1,0 +1,20 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Articles CRUD application
+            description: This is an awesome app!
+            version: 1.0.0
+
+        securityDefinitions:
+            StaticToken:
+                type: apiKey
+                description: 'Value: {auth_token}'
+                name: X-AUTH-TOKEN
+                in: header
+
+        security:
+            - StaticToken: []
+
+    areas:
+        default:
+            path_patterns: [ ^/article ]

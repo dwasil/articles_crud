@@ -1,0 +1,1 @@
+https://app.swaggerhub.com/apis/wasil/Article_CRUD/1.0.0#/Article
