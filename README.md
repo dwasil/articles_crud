@@ -1,6 +1,6 @@
 # Article CRUD application
 
-##Assignment: 
+## Assignment: 
 
 Headless (no UI) CMS for managing articles (CRUD).
 
