@@ -21,6 +21,7 @@ The architecture is following Domain-Driven Design
 The architecture is ready to communicate in different formats like XML (not implementated yet). 
 
 ## Installation
+
 git clone https://github.com/dwasil/articles_crud.git
 
 cd articles_crud
