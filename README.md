@@ -1,5 +1,25 @@
 # Article CRUD application
 
+##Assignment: 
+
+Headless (no UI) CMS for managing articles (CRUD).
+
+## Description
+
+Each article has its ID, title, body and timestamps (on creation and update)
+
+Typical set of CRUD calls including reading one and all the articles. 
+
+Creating/updating/deleting data is possible only if a secret token is provided in header HTTP_X-AUTH-TOKEN.   
+
+For reading all the articles, the endpoint allow specifying a field to sort by including whether in an ascending or descending order + basic limit/offset pagination.
+
+The whole client-server communication in a JSON format. 
+
+The architecture is following Domain-Driven Design
+
+The architecture is ready to communicate in different formats like XML (not implementated yet). 
+
 ## Installation
 git clone https://github.com/dwasil/articles_crud.git
 
