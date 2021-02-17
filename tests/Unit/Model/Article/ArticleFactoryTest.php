@@ -15,10 +15,12 @@ class ArticleFactoryTest extends TestCase
             ->getMock();
 
         $factory = new Article\ArticleFactory($validator);
-        $article = $factory->createArticle([
-            'title' => 'Article title',
-            'body' => 'Article body'
-        ]);
+        $article = $factory->createArticle(
+            [
+                'title' => 'Article title',
+                'body' => 'Article body'
+            ]
+        );
 
         self::assertInstanceOf(Article::class, $article);
     }
@@ -32,10 +34,12 @@ class ArticleFactoryTest extends TestCase
             ->willThrowException(new Article\InvalidFieldException);
 
         $factory = new Article\ArticleFactory($validator);
-        $factory->createArticle([
-           'title' => 'Article title',
-           'body' => 'Article body'
-       ]);
+        $factory->createArticle(
+            [
+                'title' => 'Article title',
+                'body' => 'Article body'
+            ]
+        );
 
         self::assertNull(null);
     }

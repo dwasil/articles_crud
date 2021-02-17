@@ -46,8 +46,7 @@ class ArticleController extends AbstractFOSRestController
         Article\ArticleFactory $articleFactory,
         Article\ArticleFieldValidator $articleFieldValidator,
         string $clientServerCommunicationFormat
-    )
-    {
+    ) {
         $this->articleRepository = $articleRepository;
         $this->serializer = $serializer;
         $this->authService = $authService;
@@ -55,9 +54,8 @@ class ArticleController extends AbstractFOSRestController
         $this->articleFieldValidator = $articleFieldValidator;
         $this->format = $clientServerCommunicationFormat;
 
-        if ($this->format === 'json')
-        {
-           $this->responseContentType = 'application/json';
+        if ($this->format === 'json') {
+            $this->responseContentType = 'application/json';
         }
     }
 
@@ -82,20 +80,16 @@ class ArticleController extends AbstractFOSRestController
      */
     public function deleteArticleAction(int $articleId, Request $request): Response
     {
-        if (!$this->checkAuth($request))
-        {
+        if (!$this->checkAuth($request)) {
             return new Response('', Response::HTTP_FORBIDDEN);
         }
 
         $article = $this->articleRepository->find($articleId);
 
-        if($article)
-        {
+        if ($article) {
             $this->articleRepository->deleteArticle($article);
             $response = new Response('', Response::HTTP_NO_CONTENT);
-        }
-        else
-        {
+        } else {
             $response = new Response('', Response::HTTP_NOT_FOUND);
         }
 
@@ -142,47 +136,38 @@ class ArticleController extends AbstractFOSRestController
      *     response=404,
      *     description="Not Found",
      * )
-
      * @param int $articleId
      * @param Request $request
      * @return Response
      */
     public function updateArticleAction(int $articleId, Request $request): Response
     {
-        if (!$this->checkAuth($request))
-        {
+        if (!$this->checkAuth($request)) {
             return new Response('', Response::HTTP_FORBIDDEN);
         }
 
         $article = $this->articleRepository->find($articleId);
 
-        if($article)
-        {
+        if ($article) {
             $data = $this->serializer->decode(
                 $request->getContent(),
                 $this->format
             );
 
-            if($data) {
+            if ($data) {
                 try {
                     $this->articleFieldValidator->checkFields($data);
                     $article->setTitle((string)$data['title']);
                     $article->setBody((string)$data['body']);
                     $this->articleRepository->updateArticle($article);
                     $response = new Response('', Response::HTTP_NO_CONTENT);
-                }
-                catch (Article\InvalidFieldException $exception)
-                {
+                } catch (Article\InvalidFieldException $exception) {
                     $response = new Response('', Response::HTTP_BAD_REQUEST);
                 }
-            }
-            else
-            {
+            } else {
                 $response = new Response('', Response::HTTP_BAD_REQUEST);
             }
-        }
-        else
-        {
+        } else {
             $response = new Response('', Response::HTTP_NOT_FOUND);
         }
 
@@ -236,8 +221,7 @@ class ArticleController extends AbstractFOSRestController
      */
     public function addArticleAction(Request $request): Response
     {
-        if (!$this->checkAuth($request))
-        {
+        if (!$this->checkAuth($request)) {
             return new Response('', Response::HTTP_FORBIDDEN);
         }
 
@@ -246,11 +230,10 @@ class ArticleController extends AbstractFOSRestController
             $this->format
         );
 
-        if($data)
-        {
+        if ($data) {
             $article = $this->articleFactory->createArticle($data);
 
-            if($article) {
+            if ($article) {
                 $articleId = $this->articleRepository->addArticle($article);
 
                 $response = new Response(
@@ -262,14 +245,10 @@ class ArticleController extends AbstractFOSRestController
                     ),
                     Response::HTTP_CREATED
                 );
-            }
-            else
-            {
+            } else {
                 $response = new Response('', Response::HTTP_BAD_REQUEST);
             }
-        }
-        else
-        {
+        } else {
             $response = new Response('', Response::HTTP_BAD_REQUEST);
         }
 
@@ -328,8 +307,7 @@ class ArticleController extends AbstractFOSRestController
      */
     public function getArticlesAction(Request $request, ParamFetcher $paramFetcher): Response
     {
-        if (!$this->checkAuth($request))
-        {
+        if (!$this->checkAuth($request)) {
             return new Response('', Response::HTTP_FORBIDDEN);
         }
 
@@ -339,7 +317,7 @@ class ArticleController extends AbstractFOSRestController
         $page = $paramFetcher->get('page');
         $offset = $this->getOffset($page, $limit);
 
-        $articles = $this->articleRepository->findBy([],[$orderBy => $order], $limit, $offset);
+        $articles = $this->articleRepository->findBy([], [$orderBy => $order], $limit, $offset);
 
         $response = new Response(
             $this->serializer->serialize(

@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ArticleControllerTest extends WebTestCase
 {
     use FixturesTrait;
+
     protected KernelBrowser $client;
 
     protected function setUp(): void
@@ -33,7 +34,10 @@ class ArticleControllerTest extends WebTestCase
         );
 
         self::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        self::assertStringContainsString('Tesla Invests $1.5 Billion in Bitcoin', $this->client->getResponse()->getContent());
+        self::assertStringContainsString(
+            'Tesla Invests $1.5 Billion in Bitcoin',
+            $this->client->getResponse()->getContent()
+        );
         self::assertStringContainsString('the bills are coming due to', $this->client->getResponse()->getContent());
     }
 
@@ -51,7 +55,7 @@ class ArticleControllerTest extends WebTestCase
         $data = json_decode($this->client->getResponse()->getContent(), true);
         self::assertIsArray($data);
         self::assertCount(2, $data);
-        self::assertArrayHasKey('title',$data[0]);
+        self::assertArrayHasKey('title', $data[0]);
         self::assertEquals(
             'Malls Spent Billions on Theme Parks to Woo Shoppers. It Made Matters Worse.',
             $data[0]['title']
@@ -126,6 +130,7 @@ class ArticleControllerTest extends WebTestCase
 
         self::assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
     }
+
     public function testUpdateArticleAction(): void
     {
         $this->client->request(
