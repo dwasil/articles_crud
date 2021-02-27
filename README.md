@@ -49,3 +49,8 @@ http://127.0.0.1:8000/api/doc
 create .env.test
 
 php ./vendor/bin/phpunit
+
+
+## Using docker-compose
+
+docker-compose build && docker-compose up
